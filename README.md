@@ -8,7 +8,7 @@ Matlab automation framework for automating a Instek GFG-3015 function generator 
 ## Installation:
 Download and extract all the files to the local matlab path "C:\Documents and Settings\%USERNAME%\My Documents\Matlab\"
 
-NOTE: USERNAME refers to the current username of the user account
+NOTE: %USERNAME% refers to the current username of the user account
 
 
 ## Examples:
