@@ -15,7 +15,7 @@
 %   command. Failure to do so may cause unexpected errors.
 %       clear fgen
 %Authors:
-%   Lester Chee, Ryley Morgan, Jacky Jiang, Yao Li, Joshua Kong, Richard Xie
+%   Lester Chee, Ryley Morgan, Jacky Jiang, Yao Li, Joshua Kong, Richard Xie, Jeremy Borys
 
 classdef Fgen < handle
     % these properties are changable by the user
