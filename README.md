@@ -6,7 +6,7 @@ Lab1Automation
 Matlab automation framework for automating a Instek GFG-3015 function generator and a Tektronix TDS1012 Oscilloscope for SFU ENSC Lab1 using Matlab.
 
 ## Installation:
-Download and extract all the files to the local matlab path "C:\Documents and Settings\<username>\My Documents\Matlab\"
+Download and extract all the files to the local matlab path "C:\Documents and Settings\ <username>\My Documents\Matlab\"
 
 
 ## Examples:
