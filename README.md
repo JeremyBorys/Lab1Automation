@@ -56,7 +56,7 @@ Example: Set the amplitude of the GFG-3015 Function Generator
 
 ## References:
 
-  TekTronix TDS200-, TDS1000-, and TDS2000-Series Digital Oscilloscope Programmer Manual
+  Tektronix TDS200-, TDS1000-, and TDS2000-Series Digital Oscilloscope Programmer Manual
   
   Function Generator, Model : GFG-3015, Operation Manual
 
