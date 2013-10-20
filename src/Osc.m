@@ -96,7 +96,7 @@ classdef Osc
         % Description:
         % Input Args:
         % Example:
-        function setScale(obj)
+        function setScale(obj, inargs)
             disp('Function: checkConnected not implemented yet. Please Implement.')
         end
 
