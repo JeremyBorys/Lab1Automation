@@ -1,2 +1,3 @@
 P=path;
-path(P,'./src')
+path(P, '.\src')
+clear P;
