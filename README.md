@@ -40,7 +40,7 @@ From inside of matlab, the user can access a description of the objects or inter
   help Osc.getVoltage
 ```
 
-Deleting the both the fgen and osc objects. Do *not* delete the objects inside of the Workspace. Instead delete them by calling matlab's clear method:
+Deleting the both the fgen and osc objects. Do **not** delete the objects inside of the Workspace. Instead delete them by calling matlab's clear method:
 ``` js
   clear fgen
   clear osc
