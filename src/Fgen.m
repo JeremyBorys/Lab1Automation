@@ -64,6 +64,14 @@ classdef Fgen < handle
             disp('Function: testBaudRate not implemented yet. Please Implement.')
         end
 
+        % Description: Provides an interface for the user to access the com object
+        % Example: 
+        %   fgen = Fgen();
+        %   fgen.getCom
+        function com = getCom(obj)
+            com = obj.com
+        end
+        
         % Description:
         % Example:
         function retVal = getFrequency(obj)

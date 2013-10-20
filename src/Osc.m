@@ -92,7 +92,15 @@ classdef Osc
             disp('Function: checkConnected not implemented yet. Please Implement.')
             retVal = -1;
         end
-
+        
+        % Description: Provides an interface for the user to access the com object
+        % Example: 
+        %   osc = Osc();
+        %   osc.getCom
+        function com = getCom(obj)
+            com = obj.com
+        end
+        
         % Description:
         % Input Args:
         % Example:
