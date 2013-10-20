@@ -18,20 +18,20 @@ First you must force Matlab to recognize the sourcefolder by executing the setPa
   setPath
 ```
 
-Next instantiate a function generator object (fgen) and an Oscilloscope object (osc):
+Next instantiate a function generator object (fgen) and an Oscilloscope object (osc) by typing into Matlab's "Command Window":
 ``` js
   fgen = Fgen()
   osc = Osc()
 ```
 
-Matlab now has access to all the internal methods contained within the fgen and osc objects. The internal methods can be called by:
+Matlab now has access to all the internal methods contained within the fgen and osc objects. The internal methods can be called by typing into Matlab's "Command Window":
 ``` js
   fgen.setVoltAmp(1)
   fgen.getVoltAmp()
   osc.getVoltage()
 ```
 
-From inside of matlab, the user can access a description of the objects or internal methods by typing:
+From inside of Matlab's "Command Window", the user can access a description of the objects or internal methods by typing:
 ``` js
   help Osc
   help Fgen
