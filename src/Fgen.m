@@ -74,6 +74,34 @@ classdef Fgen < handle
         
         % Description:
         % Example:
+        function retVal = getTriggerPhase(obj)
+            disp('Function: getPhase not implemented yet. Please Implement.')
+            retVal = -1;
+        end
+
+        % Description:
+        % Example:        
+        function retVal = getTriggerState(obj)
+            disp('Function: getTriggerState not implemented yet. Please Implement.')
+            retVal = -1;
+        end
+        
+        % Description:
+        % Example:        
+        function retVal = getTriggerRate(obj)
+            disp('Function: getTriggerState not implemented yet. Please Implement.')
+            retVal = -1;
+        end
+
+        % Description:
+        % Example:        
+        function retVal = getTriggerSpacing(obj)
+            disp('Function: getTriggerState not implemented yet. Please Implement.')
+            retVal = -1;
+        end        
+        
+        % Description:
+        % Example:
         function retVal = getFrequency(obj)
             fopen(obj.com);
             cmd = [' :FREQ? '];
@@ -141,10 +169,44 @@ classdef Fgen < handle
         % Description:
         % Input Args:
         % Example:
-        function err = sweepFrequency(obj)
+        function retVal = sweepFrequency(obj)
             disp('Function: sweepFrequency not implemented yet. Please Implement.')
         end
      
+        % Description:
+        % Input Args:
+        % Example:
+        function retVal = setSweepStartFreq(obj)
+            disp('Function: setSweepStartFreq not implemented yet. Please Implement.')
+        end
+        
+        % Description:
+        % Input Args:
+        % Example:
+        function retVal = setSweepStopFreq(obj)
+            disp('Function: setSweepStopFreq not implemented yet. Please Implement.')
+        end
+        
+        % Description:
+        % Input Args:
+        % Example:
+        function retVal = setSweepRate(obj)
+            disp('Function: setSweepRate not implemented yet. Please Implement.')
+        end
+        
+        % Description:
+        % Input Args:
+        % Example:
+        function retVal = setSweepSym(obj)
+            disp('Function: setSweepSym not implemented yet. Please Implement.')
+        end
+
+        % Description:
+        % Input Args:
+        % Example:
+        function retVal = setSweepSpacing(obj)
+            disp('Function: setSweepSpacing not implemented yet. Please Implement.')
+        end
         
         % Description: delete(obj) is the destructor method for the fgen obj. the methoed is called
         % every time the object is 'cleared'.
