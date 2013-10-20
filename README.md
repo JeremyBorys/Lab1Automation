@@ -46,7 +46,7 @@ Deleting the both the fgen and osc objects. Do **not** delete the objects inside
   clear osc
 ```
 
-Example: Set the amplitude of the GFG-3015 Function Generator
+**Example:** Set the amplitude of the GFG-3015 Function Generator
 ``` js
   setPath
   fgen = Fgen()
