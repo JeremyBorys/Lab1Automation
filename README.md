@@ -1,15 +1,15 @@
 Lab1Automation
 ==============
 
-# Description:
+## Description:
 
 Matlab automation framework for automating a Instek GFG-3015 function generator and a Tektronix TDS1012 Oscilloscope for SFU ENSC Lab1 using Matlab.
 
-# Installation:
+## Installation:
 Copy the files inside the src folder to My Documents/Matlab/
 
 
-# Examples:
+## Examples:
   
 Tested with Matlab Rev 2009b, Instek GFG-3015 Function Generator, Tektronix TDS1012 Oscilloscope.
 
@@ -26,7 +26,7 @@ Matlab now has access to all the internal methods contained within the fgen and 
   osc.getVoltage()
 ```
 
-# Authors:
+## Authors:
 
   **Lester Chee,**
   **Ryley Morgan,**
