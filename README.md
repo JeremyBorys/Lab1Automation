@@ -9,9 +9,9 @@ Matlab automation framework for automating a Instek GFG-3015 function generator 
 
 # Authors:
 
-  **Lester Chee**
-  **Ryley Morgan**
-  **Jacky Jiang**
-  **Yao Li**
-  **Joshua Kong**
-  **Richard Xie**
+  **Lester Chee,**
+  **Ryley Morgan,**
+  **Jacky Jiang,**
+  **Yao Li,**
+  **Joshua Kong,**
+  **Richard Xie,**
