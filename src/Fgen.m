@@ -20,13 +20,13 @@ classdef Fgen < handle
         frequency = -1;
         amplitude = -1;
         voltOffset = -1;
-        BaudRate = -1;
+        baudRate = -1;
     end
     
     %private properties are only accessible by calling getter and setters
     properties(access=private)
-        com = -1
-        sweepSetting = 1
+        com = -1;
+        sweepSetting = 1;
     end
     
     methods
@@ -45,12 +45,18 @@ classdef Fgen < handle
             fgen.frequency = fgen.getFrequency();
             fgen.amplitude = fgen.getVoltAmplitude();
             fgen.voltOffset = fgen.getVoltOffset();
-            fgen.BaudRate = fgen.com.BaudRate;
+            fgen.baudRate = fgen.com.BaudRate;
             
         end 
         
         % All methods below reference the the object properties using 'obj' not 'fgen' as in the 
         % constructor method
+
+        % Description: Ensures that the actual function Generator is connected
+        % Result: Tells the user that the BaudRate for the device is not set correctly
+        function checkConnected(obj)
+            disp('Function: checkConnected not implemented yet. Please Implement.')
+        end
         
         % Description: Ensures that the baudrate is correct
         % Result: Tells the user that the BaudRate for the device is not set correctly
@@ -135,7 +141,7 @@ classdef Fgen < handle
         % Description: delete(obj) is the destructor method for the fgen obj. the methoed is called
         % every time the object is 'cleared'.
         function delete(obj)
-            fclose(obj.com)
+            fclose(obj.com);
         end
         
     end
