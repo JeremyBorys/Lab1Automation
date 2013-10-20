@@ -26,6 +26,15 @@ Matlab now has access to all the internal methods contained within the fgen and 
   osc.getVoltage()
 ```
 
+From inside of matlab, the user can access a description of the objects or internal methods by typing:
+``` js
+  help Osc
+  help Fgen
+  help Fgen.setVoltAmp
+  help Fgen.getVoltAmp
+  help Osc.getVoltage
+```
+
 ## Authors:
 
   **Lester Chee,**
