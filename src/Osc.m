@@ -14,7 +14,7 @@
 %   command. Failure to do so may cause unexpected errors.
 %       clear fgen
 %Authors:
-%   Lester Chee, Ryley Morgan, Jacky Jiang, Yao Li, Joshua Kong, Richard Xie
+%   Lester Chee, Ryley Morgan, Jacky Jiang, Yao Li, Joshua Kong, Richard Xie, Jeremy Borys
 classdef Osc < handle
     properties
         channels = -1;
