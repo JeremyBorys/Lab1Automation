@@ -3,16 +3,19 @@
 %   SFU's Ensc Lab1.
 %Examples:
 %   To use you must first instantiate an Osc object:
-%   osc = Osc()
+%       osc = Osc()
 %   After the osc object is instantiated you now have access to all of the objects internal methods
-%   osc.getVoltage()
-%   osc.getChannels()
-%   osc.getScale()
-%   osc.dumpData(filename)
-%   osc.dumpScreenshot(filename)
+%       osc.getVoltage()
+%       osc.getChannels()
+%       osc.getScale()
+%       osc.dumpData(filename)
+%       osc.dumpScreenshot(filename)
+%   To delete the object from the workspace please using Matlabs clear 
+%   command. Failure to do so may cause unexpected errors.
+%       clear fgen
 %Authors:
 %   Lester Chee, Ryley Morgan, Jacky Jiang, Yao Li, Joshua Kong, Richard Xie
-classdef Osc
+classdef Osc < handle
     properties
         channels = -1;
         scale = -1;
@@ -20,16 +23,16 @@ classdef Osc
         data;
     end
 
-    %private properties are only accessible by calling getter and setters
-    properties(access=private)
+    % private properties are only accessible by calling getter and setters
+    properties(Access=private)
         com = -1;
     end
 
     methods
 
+        function osc = Osc()
         % Description: Constructor method that is called upon instantiation/creation
         % Sets the initial parameters of the function generator
-        function osc = Osc()
 
             % initialize the com object to talk to. Currently we are assuming that the osc is
             % connected to COM port 1
@@ -44,74 +47,81 @@ classdef Osc
 
         end
 
+        function checkConnected(obj)
         % Description: Ensures that the actual function Generator is connected
         % Result: Tells the user that the BaudRate for the device is not set correctly
-        function checkConnected(obj)
             disp('Function: checkConnected not implemented yet. Please Implement.')
         end
 
+        function testBaudRate(obj)
         % Description: Ensures that the baudrate is correct
         % Result: Tells the user that the BaudRate for the device is not set correctly
-        function testBaudRate(obj)
             disp('Function: testBaudRate not implemented yet. Please Implement.')
         end
 
-        % Description:
-        % Input Args:
-        % Example:
         function retVal = dumpData(obj, filename)
-            disp('Function: checkConnected not implemented yet. Please Implement.')
-            retVal = filename;
-        end
-
         % Description:
         % Input Args:
         % Example:
-        function retVal = dumpScreenshot(obj, filename)
-            disp('Function: checkConnected not implemented yet. Please Implement.')
+            disp('Function: dumpData not implemented yet. Please Implement.')
             retVal = filename;
         end
 
+        function retVal = dumpScreenshot(obj, filename)
         % Description:
+        % Input Args:
         % Example:
+            disp('Function: dumpScreenshot not implemented yet. Please Implement.')
+            retVal = filename;
+        end
+
         function retVal = getVoltage(obj)
-            disp('Function: checkConnected not implemented yet. Please Implement.')
+        % Description:
+        % Example:
+            disp('Function: getVoltage not implemented yet. Please Implement.')
             retVal = -1;
         end
 
+        function retVal = getChannels(obj)
         % Description:
         % Example:
-        fucntion retVal = getChannels(obj)
-            disp('Function: checkConnected not implemented yet. Please Implement.')
+            disp('Function: getChannels not implemented yet. Please Implement.')
             retVal = -1;
         end
 
-        % Description:
-        % Example:
         function retVal = getScale(obj)
-            disp('Function: checkConnected not implemented yet. Please Implement.')
+        % Description:
+        % Example:
+            disp('Function: getScale not implemented yet. Please Implement.')
             retVal = -1;
         end
         
+        function retVal = getPhase(obj)
+        % Description:
+        % Example:
+            disp('Function: getPhase not implemented yet. Please Implement.')
+            retVal = -1;
+        end
+        
+        function com = getCom(obj)
         % Description: Provides an interface for the user to access the com object
         % Example: 
         %   osc = Osc();
         %   osc.getCom
-        function com = getCom(obj)
             com = obj.com
         end
         
+        function setScale(obj, inargs)
         % Description:
         % Input Args:
         % Example:
-        function setScale(obj, inargs)
-            disp('Function: checkConnected not implemented yet. Please Implement.')
+            disp('Function: setScale not implemented yet. Please Implement.')
         end
 
+        function delete(obj)
         % Description: delete(obj) is the destructor method for the osc obj. the methoed is called
         % every time the object is 'cleared'. We want to make sure that the com object is closed
         % before the object is cleared from memory.
-        function delete(obj)
             fclose(obj.com);
         end
 
