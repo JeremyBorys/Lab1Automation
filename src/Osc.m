@@ -37,6 +37,10 @@ classdef Osc < handle
             % initialize the com object to talk to. Currently we are assuming that the osc is
             % connected to COM port 1
             osc.com = serial ('COM2');
+            
+            osc.com.InputBufferSize = 1000000;
+            osc.com.OutputBufferSize = 500000;
+            osc.com.Flowcontrol = 'hardware';
 
             osc.testBaudRate();
             osc.checkConnected();
@@ -48,9 +52,17 @@ classdef Osc < handle
         end
 
         function checkConnected(obj)
-        % Description: Ensures that the actual function Generator is connected
-        % Result: Tells the user that the BaudRate for the device is not set correctly
-            disp('Function: checkConnected not implemented yet. Please Implement.')
+        % Description: Ensures that the actual Oscilloscope is connected.
+        % Result: Tells the user that the Oscilloscope is connected.
+            fopen(obj.com);
+            fprintf(obj.com, '*IDN?');
+            res = fscanf(obj.com);
+            if strfind(res, 'TEKTRONIX')
+                display('SUCCESS: Oscilloscope connected properly!')
+            else
+                display('ERROR: Oscilloscope not connected properly!')
+            end
+            fclose(obj.com);
         end
 
         function testBaudRate(obj)
