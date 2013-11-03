@@ -79,35 +79,47 @@ classdef Fgen < handle
         end
         
         function retVal = getTriggerPhase(obj)
-        % Description:
+        % Description: Check the value of the trigger phase
         % Example:
-            disp('Function: getPhase not implemented yet. Please Implement.')
-            retVal = -1;
+            fopen(obj.com);
+            cmd = [' :SOUR:TRIG:PHAS ?'];
+            fprintf(obj.com, cmd);
+            retVal = str2num(fscanf(obj.com));
+            fclose(obj.com);
         end
       
         function retVal = getTriggerState(obj)
-        % Description:
+        % Description: Check the trigger state
         % Example:  
-            disp('Function: getTriggerState not implemented yet. Please Implement.')
-            retVal = -1;
+            fopen(obj.com);
+            cmd = [' :SOUR:TRIG:STAT ?'];
+            fprintf(obj.com, cmd);
+            retVal = str2num(fscanf(obj.com));
+            fclose(obj.com);
         end
                
         function retVal = getTriggerRate(obj)
-        % Description:
+        % Description: Check the value of the trigger rate
         % Example: 
-            disp('Function: getTriggerState not implemented yet. Please Implement.')
-            retVal = -1;
+            fopen(obj.com);
+            cmd = [' :SOUR:TRIG:RAT ? '];
+            fprintf(obj.com, cmd);
+            retVal = str2num(fscanf(obj.com));
+            fclose(obj.com);
         end
      
         function retVal = getTriggerSpacing(obj)
-        % Description:
-        % Example:   
-            disp('Function: getTriggerState not implemented yet. Please Implement.')
-            retVal = -1;
+        % Description: Check the method of sweep 
+        % Example:     
+            fopen(obj.com);
+            cmd = [' :SOUR:SWE:SPAC ?'];
+            fprintf(obj.com, cmd);
+            retVal = str2num(fscanf(obj.com));
+            fclose(obj.com);
         end        
         
         function retVal = getFrequency(obj)
-        % Description:
+        % Description: Check the main frequency
         % Example:
             fopen(obj.com);
             cmd = [' :FREQ? '];
@@ -117,7 +129,7 @@ classdef Fgen < handle
         end
 
         function retVal = getVoltAmplitude(obj)
-        % Description:
+        % Description: Check the value of output amplitude
         % Example:
             fopen(obj.com);
             cmd = [' :AMPL:VOLT? '];
@@ -127,7 +139,7 @@ classdef Fgen < handle
         end
         
         function retVal = getVoltOffset(obj)
-        % Description:
+        % Description: Check the voltage of offset
         % Example:
             fopen(obj.com);
             cmd = [' :OFFSet? '];
@@ -137,8 +149,8 @@ classdef Fgen < handle
         end
            
         function setFrequency(obj, frequency)
-        % Description:
-        % Input Args:
+        % Description: Set the main frequency
+        % Input Args: Frequency
         % Example:
             fopen(obj.com);
             cmd = ':FREQ ';
