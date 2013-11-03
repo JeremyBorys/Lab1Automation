@@ -194,26 +194,71 @@ classdef Fgen < handle
         % Example:
             disp('Function: sweepFrequency not implemented yet. Please Implement.')
         end
-
-        function retVal = setSweepStartFreq(obj)
-        % Description:
+        
+        function setSweepStartFreq(obj, frequency)
+        % Description: Sets the value of sweep start frequency
         % Input Args:
         % Example:
-            disp('Function: setSweepStartFreq not implemented yet. Please Implement.')
+            fopen(obj.com);
+            cmd = ':SOUR:SWE:STAR ';
+            cmd = [cmd num2str(frequency)];
+            fprintf(obj.com, cmd);
+            fclose(obj.com);
         end
         
-        function retVal = setSweepStopFreq(obj)
-        % Description:
+        function retVal = getSweepStartFreq(obj)
+        % Description: Check the value of sweep start frequency
         % Input Args:
         % Example:
-            disp('Function: setSweepStopFreq not implemented yet. Please Implement.')
+            fopen(obj.com);
+            cmd = [' :SOUR:SWE:STAR? '];
+            fprintf(obj.com, cmd);
+            retVal = str2num(fscanf(obj.com));
+            fclose(obj.com);
         end
         
-        function retVal = setSweepRate(obj)
-        % Description:
+        function setSweepStopFreq(obj, frequency)
+        % Description: Sets the value of sweep stop frequency
         % Input Args:
         % Example:
-            disp('Function: setSweepRate not implemented yet. Please Implement.')
+            fopen(obj.com);
+            cmd = ':SOUR:SWE:STOP ';
+            cmd = [cmd num2str(frequency)];
+            fprintf(obj.com, cmd);
+            fclose(obj.com);
+        end
+        
+        function retVal = getSweepStopFreq(obj)
+        % Description: Check the value of sweep stop frequency
+        % Input Args:
+        % Example:
+            fopen(obj.com);
+            cmd = [' :SOUR:SWE:STOP? '];
+            fprintf(obj.com, cmd);
+            retVal = str2num(fscanf(obj.com));
+            fclose(obj.com);
+        end
+        
+        function setSweepRate(obj, rate)
+        % Description: Set the value of sweep rate
+        % Input Args:
+        % Example:            
+            fopen(obj.com);
+            cmd = ':SOUR:SWE:RAT ';
+            cmd = [cmd num2str(rate)];
+            fprintf(obj.com, cmd);
+            fclose(obj.com);
+        end
+        
+        function retVal = getSweepRate(obj)
+        % Description: Check the value of sweep rate
+        % Input Args:
+        % Example:
+            fopen(obj.com);
+            cmd = [' :SOUR:SWE:RAT? '];
+            fprintf(obj.com, cmd);
+            retVal = str2num(fscanf(obj.com));
+            fclose(obj.com);
         end
         
         function retVal = setSweepSym(obj)
