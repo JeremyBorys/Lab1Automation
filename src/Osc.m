@@ -129,6 +129,13 @@ classdef Osc < handle
         % Example:
             disp('Function: setScale not implemented yet. Please Implement.')
         end
+        
+        function setCursor(obj, inargs)
+        % Description: Sets cursor 1 or 2 on the oscilloscope 
+        % Input Args: ??
+        % Example:
+            disp('Function: setCursor not implemented yet. Please Implement.')
+        end
 
         function delete(obj)
         % Description: delete(obj) is the destructor method for the osc obj. the methoed is called
