@@ -100,6 +100,20 @@ classdef Osc < handle
             disp('Function: getChannels not implemented yet. Please Implement.')
             retVal = -1;
         end
+        
+        function retVal = getCursorDelta(obj)
+        % Description: Gets the Distance between two cursors horizontal or vertical
+        % Example:
+            disp('Function: getChannels not implemented yet. Please Implement.')
+            retVal = -1;
+        end
+
+        function retVal = getCursorSettings(obj)
+        % Description: Gets the vertical or horizontal cursor settings
+        % Example:
+            disp('Function: getChannels not implemented yet. Please Implement.')
+            retVal = -1;
+        end
 
         function retVal = getScale(obj)
         % Description:
@@ -131,7 +145,7 @@ classdef Osc < handle
         end
         
         function setCursor(obj, inargs)
-        % Description: Sets cursor 1 or 2 on the oscilloscope 
+        % Description: Sets vertical or horizontal cursors on the oscilloscope 
         % Input Args: ??
         % Example:
             disp('Function: setCursor not implemented yet. Please Implement.')
