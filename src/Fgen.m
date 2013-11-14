@@ -20,6 +20,7 @@
 classdef Fgen < handle
     % these properties are changable by the user
     properties
+        waveform = -1;
         frequency = -1;
         amplitude = -1;
         voltOffset = -1;
@@ -45,6 +46,7 @@ classdef Fgen < handle
             fgen.testBaudRate();
             fgen.checkConnected();
             
+            fgen.waveform = fgen.getWaveForm();
             fgen.frequency = fgen.getFrequency();
             fgen.amplitude = fgen.getVoltAmplitude();
             fgen.voltOffset = fgen.getVoltOffset();
@@ -75,7 +77,24 @@ classdef Fgen < handle
         % Example: 
         %   fgen = Fgen();
         %   fgen.getCom
-            com = obj.com
+            com = obj.com;
+        end
+        
+        function retVal = getWaveForm(obj)
+        % Description: Check the waveform: Sinusoid, Triangle, Square
+        % Example:
+            fopen(obj.com);
+            cmd = ' :FUNC:WAV ?';
+            fprintf(obj.com, cmd);
+            retVal = str2num(fscanf(obj.com));
+            if (retVal == 1)
+                retVal = 'Sinusoid';
+            elseif (retVal == 2)
+                retVal = 'Triangle';
+            elseif (retVal == 3)
+                retVal = 'Square';
+            end
+            fclose(obj.com);
         end
         
         function retVal = getTriggerPhase(obj)
