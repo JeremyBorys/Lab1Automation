@@ -88,16 +88,25 @@ classdef Osc < handle
         end
 
         function retVal = getVoltage(obj)
-        % Description:
+        % Description: Get the trigger holdoff value
         % Example:
-            disp('Function: getVoltage not implemented yet. Please Implement.')
+            
+            fopen(obj.com);
+            cmd = ['DISplay:FORMat { XY | YT } '];
+            fprintf(obj.com, cmd);
+            retVal = str2num(fscanf(obj.com));
+            fclose(obj.com);
             retVal = -1;
         end
 
         function retVal = getChannels(obj)
         % Description:
         % Example:
-            disp('Function: getChannels not implemented yet. Please Implement.')
+            fopen(obj.com);
+            cmd = ['CH<x>? '];
+            fprintf(obj.com, cmd);
+            retVal = str2num(fscanf(obj.com));
+            fclose(obj.com);
             retVal = -1;
         end
         
