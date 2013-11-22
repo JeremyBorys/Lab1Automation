@@ -43,33 +43,54 @@ classdef Fgen < handle
             % connected to COM port 1
             fgen.com = serial ('COM1');
             
-            fgen.testBaudRate();
-            fgen.checkConnected();
-            
-            fgen.waveform = fgen.getWaveForm();
-            fgen.frequency = fgen.getFrequency();
-            fgen.amplitude = fgen.getVoltAmplitude();
-            fgen.voltOffset = fgen.getVoltOffset();
-            fgen.baudRate = fgen.com.BaudRate;
-            
+            if fgen.checkConnected()
+                fgen.waveform = fgen.getWaveForm();
+                fgen.frequency = fgen.getFrequency();
+                fgen.amplitude = fgen.getVoltAmplitude();
+                fgen.voltOffset = fgen.getVoltOffset();
+                fgen.baudRate = fgen.com.BaudRate;
+            else
+                fgen.com.BaudRate = 19200;
+                result = fgen.checkConnected();
+                if result
+                    disp('***************** ERROR *******************')
+                    disp('BaudRate is set to 19200 which is unstable.')
+                    disp('Please change the BaudRate on the Function ')
+                    disp('Generator to 9600 by pressing the RS232 Button')
+                    disp('twice and using the scroll wheel to change the ')
+                    disp('BaudRate.')
+                    disp('***************** ERROR *******************')
+                else
+                    disp('***************** ERROR *******************')
+                    disp('Could not connect the Function Generator. Please')
+                    disp('verify that the Function Generator is plugged into')
+                    disp('COM2.')
+                    disp('***************** ERROR *******************')
+                end
+                
+            end
         end 
         
         % All methods below reference the the object properties using 'obj' not 'fgen' as in the 
         % constructor method
 
-        function checkConnected(obj)
+        function retVal = checkConnected(obj)
         % Description: Ensures that the actual function Generator is
         % connected.        
         % Result: Tells the user that the BaudRate for the device is not
         % set correctly.
-            disp('Function: checkConnected not implemented yet. Please Implement.')
-        end
         
-        function testBaudRate(obj)
-        % Description: Ensures that the baudrate is correct
-        % Result: Tells the user that the BaudRate for the device is not
-        % set correctly
-            disp('Function: testBaudRate not implemented yet. Please Implement.')
+        % TODO(Jeremy Nov 22): We should set the timeout to be smaller
+            fopen(obj.com);
+            fprintf(obj.com, '*IDN?');
+            res = fscanf(obj.com);
+            if strfind(res, 'Function Generator')
+                display('SUCCESS: Function Generator connected properly!')
+                retVal = 1;
+            else
+                retVal = 0;
+            end
+            fclose(obj.com);
         end
 
         function com = getCom(obj)
@@ -166,7 +187,7 @@ classdef Fgen < handle
             retVal = str2num(fscanf(obj.com));
             fclose(obj.com);
         end
-           
+        
         function setFrequency(obj, frequency)
         % Description: Set the main frequency
         % Input Args: Frequency
@@ -176,6 +197,7 @@ classdef Fgen < handle
             cmd = [cmd num2str(frequency)];
             fprintf(obj.com, cmd);
             fclose(obj.com);
+            obj.frequency = obj.getFrequency();
         end
         
 
@@ -189,6 +211,7 @@ classdef Fgen < handle
             cmd = [':OFFSet ' num2str(offset)];
             fprintf(obj.com, cmd);
             fclose(obj.com);
+            obj.voltOffset = obj.getVoltOffset();
         end
 
 
@@ -205,6 +228,7 @@ classdef Fgen < handle
             cmd = [cmd num2str(voltage)];
             fprintf(obj.com, cmd);
             fclose(obj.com);
+            obj.amplitude = obj.getVoltAmplitude();
         end
         
         function retVal = sweepFrequency(obj)
@@ -292,6 +316,14 @@ classdef Fgen < handle
         % Input Args:
         % Example:
             disp('Function: setSweepSpacing not implemented yet. Please Implement.')
+        end
+        
+        function setWaveform(obj, waveform)
+        % Description: Sets the Function generator Waveform
+        % Input Args: waveform(str) = 'sin', 'tri', 'square'
+        % Example:
+        %    fgen.setWaveform('tri')
+            disp('Need to implement Set WaveForm')
         end
         
         function delete(obj)
