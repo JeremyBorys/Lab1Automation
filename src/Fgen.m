@@ -87,6 +87,9 @@ classdef Fgen < handle
             if strfind(res, 'Function Generator')
                 display('SUCCESS: Function Generator connected properly!')
                 retVal = 1;
+            elseif strfind(res, 'GFG3015')
+                display('SUCCESS: Function Generator connected properly!')
+                retVal = 1;
             else
                 retVal = 0;
             end
