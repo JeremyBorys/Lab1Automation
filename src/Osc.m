@@ -18,9 +18,11 @@
 classdef Osc < handle
     properties
         channels = -1;
-        scale = -1;
+        scaleCH1 = -1;
+        scaleCH2 = -1;
         baudRate = -1;
         data;
+        
     end
 
     % private properties are only accessible by calling getter and setters
@@ -46,11 +48,32 @@ classdef Osc < handle
             osc.checkConnected();
 
             osc.channels = osc.getChannels();
-            osc.scale = osc.getScale();
+            osc.scaleCH1 = osc.getScaleCH1();
+            osc.scaleCH2 = osc.getScaleCH2();
             osc.baudRate = osc.com.BaudRate;
 
         end
 
+        function setChannel(obj, channel)
+        % Description: Changes channels that are being used on the osc
+        % Input Args: channel(number): 1, 2, or 3 for channels 1, 2 or both
+        % Example:
+        %    osc.channel(1) % for channel 1
+        %    osc.channel(2) % for channel 2
+        %    osc.channel(3) % for both channels
+            if channel == 1
+                obj.channels = 1;
+            elseif channel == 2
+                obj.channels = 2;
+            elseif channel == 3
+                obj.channels = 3;
+            else
+                disp('Please enter a valid number for 1, 2 or 3 for')
+                disp('channels 1, 2 or both')
+            end
+        end
+        
+        
         function checkConnected(obj)
         % Description: Ensures that the actual Oscilloscope is connected.
         % Result: Tells the user that the Oscilloscope is connected.
@@ -90,7 +113,6 @@ classdef Osc < handle
         function retVal = getVoltage(obj)
         % Description: Get the trigger holdoff value
         % Example:
-            
             fopen(obj.com);
             cmd = ['DISplay:FORMat { XY | YT } '];
             fprintf(obj.com, cmd);
@@ -107,7 +129,6 @@ classdef Osc < handle
             fprintf(obj.com, cmd);
             retVal = str2num(fscanf(obj.com));
             fclose(obj.com);
-            retVal = -1;
         end
         
         function retVal = getCursorDelta(obj)
@@ -124,11 +145,24 @@ classdef Osc < handle
             retVal = -1;
         end
 
-        function retVal = getScale(obj)
+        function retVal = getScaleCH1(obj)
         % Description:
         % Example:
-            disp('Function: getScale not implemented yet. Please Implement.')
-            retVal = -1;
+            fopen(obj.com);
+            cmd = ['CH1:SCAle?'];
+            fprintf(obj.com, cmd);
+            retVal = str2num(fscanf(obj.com));
+            fclose(obj.com);
+        end
+        
+        function retVal = getScaleCH2(obj)
+        % Description:
+        % Example:
+            fopen(obj.com);
+            cmd = ['CH2:SCAle?'];
+            fprintf(obj.com, cmd);
+            retVal = str2num(fscanf(obj.com));
+            fclose(obj.com);
         end
         
         function retVal = getPhase(obj)
@@ -146,13 +180,6 @@ classdef Osc < handle
             com = obj.com
         end
         
-        function setScale(obj, inargs)
-        % Description:
-        % Input Args:
-        % Example:
-            disp('Function: setScale not implemented yet. Please Implement.')
-        end
-        
         function setCursor(obj, inargs)
         % Description: Sets vertical or horizontal cursors on the oscilloscope 
         % Input Args: ??
@@ -167,7 +194,49 @@ classdef Osc < handle
             fclose(obj.com);
         end
 
+        function retVal = getPk2Pk(obj)
+        % Description: Takes the measured Pk2Pk 
+        % Input Args: ??
+        % Example:
+            fopen(obj.com);
+            cmd = [':MEASUREMENT:IMMED:TYPE PK2PK '];
+            cmd2 = ['MEASUREMENT:IMMED:VALUE? '];
+            fprintf(obj.com, cmd);
+            fprintf(obj.com, cmd2);
+            retVal = str2num(fscanf(obj.com));
+            fclose(obj.com);
+            
+            scale = obj.getScaleCH1()
+            if scale > retVal
+                obj.setScaleCH1(scale/4)
+                retVal = obj.getPk2Pk()
+            end
+            if scale * 8 < retVal
+            
+        end
+        
+        function setScaleCH1(obj, scale)
+        % Description: Takes the measured Pk2Pk 
+        % Input Args: ??
+        % Example:
+            fopen(obj.com);
+            cmd = 'CH1:SCAle ';
+            cmd = [cmd num2str(scale)];
+            fprintf(obj.com, cmd);
+            fclose(obj.com);
+        end
+        
+        function setScaleCH2(obj, scale)
+        % Description: Takes the measured Pk2Pk 
+        % Input Args: ??
+        % Example:
+            fopen(obj.com);
+            cmd = 'CH2:SCAle ';
+            cmd = [cmd num2str(scale)];
+            fprintf(obj.com, cmd);
+            fclose(obj.com);
+        end           
+        
     end % methods
 
 end % classdef
-
