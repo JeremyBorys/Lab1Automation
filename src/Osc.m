@@ -213,6 +213,7 @@ classdef Osc < handle
             end
             if scale * 8 < retVal
             
+            end
         end
         
         function setScaleCH1(obj, scale)
