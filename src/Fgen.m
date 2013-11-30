@@ -210,11 +210,17 @@ classdef Fgen < handle
         % Example:
         
         %AMPL + (2*OFFSET) <= 10
-            fopen(obj.com);
-            cmd = [':OFFSet ' num2str(offset)];
-            fprintf(obj.com, cmd);
-            fclose(obj.com);
-            obj.voltOffset = obj.getVoltOffset();
+            if obj.amplitude + abs(2*offset) > 10
+                error('myApp:setVoltOffset', 'The voltage offset is larger than the limit')
+            
+            else 
+                fopen(obj.com);
+                cmd = [':OFFSet ' num2str(offset)];
+                fprintf(obj.com, cmd);
+                fclose(obj.com);
+                obj.voltOffset = obj.getVoltOffset();
+            end
+
         end
 
 
@@ -226,12 +232,19 @@ classdef Fgen < handle
         
             %need a condition to check invalid voltages.           
             %AMPL + (2*OFFSET) <= 10
+           
+            if voltage + abs(2*obj.voltOffset)> 10
+                error('myApp:setVoltAmplitude','The voltage amplitude is larger than the set limit')
+            elseif voltage <= 0
+                error('myApp:setVoltAmplitude','It can not be equal to or below 0')
+            else
             fopen(obj.com);
             cmd = ':AMPL:VOLT ';
             cmd = [cmd num2str(voltage)];
             fprintf(obj.com, cmd);
             fclose(obj.com);
             obj.amplitude = obj.getVoltAmplitude();
+            end
         end
         
         function retVal = sweepFrequency(obj)
@@ -283,6 +296,21 @@ classdef Fgen < handle
             fprintf(obj.com, cmd);
             retVal = str2num(fscanf(obj.com));
             fclose(obj.com);
+        end
+        
+        function retVal = sweepOffset(obj, start, finish, numData)
+        % Description:sweep a DC OffsetVoltage from start to end
+        % Input Args:
+        % Example:
+            list = linspace(start, finish, numData)
+            
+            for i = list
+                VoltOffset = sprintf('%.2f',i) 
+                obj.setVoltOffset(VoltOffset)
+                
+            end   
+      
+            
         end
         
         function setSweepRate(obj, rate)
