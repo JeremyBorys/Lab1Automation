@@ -40,7 +40,6 @@ classdef Osc < handle
             % connected to COM port 1
             osc.com = serial ('COM2');
             
-            osc.com.TimeOut = 1;
             osc.com.InputBufferSize = 1000000;
             osc.com.OutputBufferSize = 500000;
             osc.com.Flowcontrol = 'hardware';
@@ -51,7 +50,6 @@ classdef Osc < handle
             osc.scaleCH1 = osc.getScaleCH1();
             osc.scaleCH2 = osc.getScaleCH2();
             osc.baudRate = osc.com.BaudRate;
-            osc.com.TimeOut = 10;
 
         end
 
@@ -78,6 +76,7 @@ classdef Osc < handle
         function checkConnected(obj)
         % Description: Ensures that the actual Oscilloscope is connected.
         % Result: Tells the user that the Oscilloscope is connected.
+            obj.com.TimeOut = 1;
             fopen(obj.com);
             fprintf(obj.com, '*IDN?');
             res = fscanf(obj.com);
@@ -87,6 +86,21 @@ classdef Osc < handle
                 display('ERROR: Oscilloscope not connected properly!')
             end
             fclose(obj.com);
+            obj.com.TimeOut = 10;
+
+        function autoSet(obj)
+        % Description: Ensures that the actual Oscilloscope is connected.
+        % Result: Tells the user that the Oscilloscope is connected.
+            fopen(obj.com);
+            cmd = ['AUTOSet EXECute '];
+            fprintf(obj.com, cmd);
+            fclose(obj.com);
+        end
+        
+        function testBaudRate(obj)
+        % Description: Ensures that the baudrate is correct
+        % Result: Tells the user that the BaudRate for the device is not set correctly
+            disp('Function: testBaudRate not implemented yet. Please Implement.')
         end
 
         function retVal = dumpData(obj, filename)
@@ -139,6 +153,30 @@ classdef Osc < handle
             disp('Function: getChannels not implemented yet. Please Implement.')
             retVal = -1;
         end
+        
+        function retVal = getFrequencyCH1(obj)
+        % Description: Gets the vertical or horizontal cursor settings
+        % Example:
+            fopen(obj.com);
+            cmd = [':MEASUREMENT:IMMED:TYPE FREQUENCY;SOURCE CH1; '];
+            cmd2 = ['MEASUREMENT:IMMED:VALUE? '];
+            fprintf(obj.com, cmd);
+            fprintf(obj.com, cmd2);
+            retVal = str2num(fscanf(obj.com));
+            fclose(obj.com);
+        end
+        
+        function retVal = getFrequencyCH2(obj)
+        % Description: Gets the vertical or horizontal cursor settings
+        % Example:
+            fopen(obj.com);
+            cmd = [':MEASUREMENT:IMMED:TYPE FREQUENCY;SOURCE CH2; '];
+            cmd2 = ['MEASUREMENT:IMMED:VALUE? '];
+            fprintf(obj.com, cmd);
+            fprintf(obj.com, cmd2);
+            retVal = str2num(fscanf(obj.com));
+            fclose(obj.com);
+        end
 
         function retVal = getScaleCH1(obj)
         % Description:
@@ -161,10 +199,26 @@ classdef Osc < handle
         end
         
         function retVal = getPhase(obj)
-        % Description:
         % Example:
-            disp('Function: getPhase not implemented yet. Please Implement.')
-            retVal = -1;
+            fopen(obj.com);
+            fprintf(obj.com, 'Data:Source CH2');
+            fprintf(obj.com, 'Data:Encdg SRIbinary');
+            fprintf(obj.com, 'Data:Width 2');
+            fprintf(obj.com, 'Data:Start 1');
+            fprintf(obj.com, 'Data:Stop 2500');
+            fprintf(obj.com, 'Curve? ');
+            retVal = fread(obj.com, 2500, 'int16');
+            cleanup = fscanf(obj.com);
+            
+            fprintf(obj.com, 'wfmpre:ch2:xincr?')
+            horzmult2 = str2num(fscanf(obj.com));
+            
+            xch = horzmult2.*linspace(1,2500,2500);
+            retVal = obj.scaleCH2.*retVal;
+            
+            plot(xch2,retVal)
+            
+            fclose(obj.com)
         end
         
         function com = getCom(obj)
@@ -189,22 +243,44 @@ classdef Osc < handle
             fclose(obj.com);
         end
 
-        function retVal = getPk2Pk(obj)
+        function retVal = getPk2PkCH1(obj)
         % Description: Takes the measured Pk2Pk 
         % Input Args: ??
         % Example:
             fopen(obj.com);
-            cmd = [':MEASUREMENT:IMMED:TYPE PK2PK '];
+            cmd = [':MEASUREMENT:IMMED:TYPE PK2PK;SOURCE CH1; '];
             cmd2 = ['MEASUREMENT:IMMED:VALUE? '];
             fprintf(obj.com, cmd);
             fprintf(obj.com, cmd2);
             retVal = str2num(fscanf(obj.com));
             fclose(obj.com);
             
-            scale = obj.getScaleCH1()
+            scale = obj.getScaleCH1();
             if scale > retVal
                 obj.setScaleCH1(scale/4)
-                retVal = obj.getPk2Pk()
+                retVal = obj.getPk2PkCH1()
+            end
+            if scale * 8 < retVal
+            
+            end
+        end
+
+        function retVal = getPk2PkCH2(obj)
+        % Description: Takes the measured Pk2Pk 
+        % Input Args: ??
+        % Example:
+            fopen(obj.com);
+            cmd = [':MEASUREMENT:IMMED:TYPE PK2PK;SOURCE CH2; '];
+            cmd2 = ['MEASUREMENT:IMMED:VALUE? '];
+            fprintf(obj.com, cmd);
+            fprintf(obj.com, cmd2);
+            retVal = str2num(fscanf(obj.com));
+            fclose(obj.com);
+            
+            scale = obj.getScaleCH2();
+            if scale > retVal
+                obj.setScaleCH2(scale/4);
+                retVal = obj.getPk2PkCH2();
             end
             if scale * 8 < retVal
             
