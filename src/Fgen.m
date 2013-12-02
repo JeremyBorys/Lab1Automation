@@ -43,6 +43,8 @@ classdef Fgen < handle
             % connected to COM port 1
             fgen.com = serial ('COM1');
             
+            
+            fgen.com.TimeOut = 1;
             if fgen.checkConnected()
                 fgen.waveform = fgen.getWaveForm();
                 fgen.frequency = fgen.getFrequency();
@@ -67,7 +69,7 @@ classdef Fgen < handle
                     disp('COM2.')
                     disp('***************** ERROR *******************')
                 end
-                
+            fgen.com.TimeOut = 10;
             end
         end 
         
