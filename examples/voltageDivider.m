@@ -2,12 +2,7 @@ function vo = voltageDivider(start, stop, numData, filename)
     fgen = Fgen();
     osc = Osc();
 
-    %incrVal = (stop - start)/numData;
-    %endVal = stop-incrVal;
-    %vo = [start : incrVal : endVal];
-    %vin = [start : incrVal : endVal];
     i = 1;
-
     volt = linspace(stop, start, numData);
     
     for voltage = volt
