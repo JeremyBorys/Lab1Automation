@@ -43,8 +43,6 @@ classdef Fgen < handle
             % connected to COM port 1
             fgen.com = serial ('COM1');
             
-            
-            fgen.com.TimeOut = 1;
             if fgen.checkConnected()
                 fgen.waveform = fgen.getWaveForm();
                 fgen.frequency = fgen.getFrequency();
@@ -69,7 +67,7 @@ classdef Fgen < handle
                     disp('COM2.')
                     disp('***************** ERROR *******************')
                 end
-            fgen.com.TimeOut = 10;
+                
             end
         end 
         
@@ -83,6 +81,8 @@ classdef Fgen < handle
         % set correctly.
         
         % TODO(Jeremy Nov 22): We should set the timeout to be smaller
+            
+            obj.com.timeout = 1;
             fopen(obj.com);
             fprintf(obj.com, '*IDN?');
             res = fscanf(obj.com);
@@ -96,6 +96,7 @@ classdef Fgen < handle
                 retVal = 0;
             end
             fclose(obj.com);
+            obj.com.timeout = 10;
         end
 
         function com = getCom(obj)
