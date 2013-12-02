@@ -40,6 +40,7 @@ classdef Osc < handle
             % connected to COM port 1
             osc.com = serial ('COM2');
             
+            osc.com.TimeOut = 1;
             osc.com.InputBufferSize = 1000000;
             osc.com.OutputBufferSize = 500000;
             osc.com.Flowcontrol = 'hardware';
@@ -50,6 +51,7 @@ classdef Osc < handle
             osc.scaleCH1 = osc.getScaleCH1();
             osc.scaleCH2 = osc.getScaleCH2();
             osc.baudRate = osc.com.BaudRate;
+            osc.com.TimeOut = 10;
 
         end
 
