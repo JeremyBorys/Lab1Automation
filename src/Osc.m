@@ -44,7 +44,6 @@ classdef Osc < handle
             osc.com.OutputBufferSize = 500000;
             osc.com.Flowcontrol = 'hardware';
 
-            osc.testBaudRate();
             osc.checkConnected();
 
             osc.channels = osc.getChannels();
@@ -86,12 +85,6 @@ classdef Osc < handle
                 display('ERROR: Oscilloscope not connected properly!')
             end
             fclose(obj.com);
-        end
-
-        function testBaudRate(obj)
-        % Description: Ensures that the baudrate is correct
-        % Result: Tells the user that the BaudRate for the device is not set correctly
-            disp('Function: testBaudRate not implemented yet. Please Implement.')
         end
 
         function retVal = dumpData(obj, filename)
