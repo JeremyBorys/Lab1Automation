@@ -97,38 +97,38 @@ classdef Osc < handle
             fprintf(obj.com, cmd);
             fclose(obj.com);
         end
-        
-        function testBaudRate(obj)
-        % Description: Ensures that the baudrate is correct
-        % Result: Tells the user that the BaudRate for the device is not set correctly
-            disp('Function: testBaudRate not implemented yet. Please Implement.')
-        end
 
         function retVal = dumpData(obj, filename)
-        % Description:
-        % Input Args:
+        % Description: Possible use in the future to store data to an osc obj
+        %    and dump that data to an excel spreadsheet.
+        %    Also possible would be a wrapper around the xlswrite function as
+        %    the function is not very intuitive to use
+        % Input Args: filename(str)
         % Example:
+        %    osc.dumpData('data')
             disp('Function: dumpData not implemented yet. Please Implement.')
             retVal = filename;
         end
 
         function retVal = dumpScreenshot(obj, filename)
-        % Description:
-        % Input Args:
+        % Description: Undecided on whether the best method would be to get
+        %     the screenshot directly or build the screenshot out of data
+        % Input Args: filename(str)
         % Example:
+        %    osc.dumpScreenShot('screenshot.png')
             disp('Function: dumpScreenshot not implemented yet. Please Implement.')
             retVal = filename;
         end
 
-        function retVal = getVoltage(obj)
+        function retVal = getVoltageTrigger(obj)
         % Description: Get the trigger holdoff value
         % Example:
+        %    osc.getVoltageTrigger()
             fopen(obj.com);
             cmd = ['DISplay:FORMat { XY | YT } '];
             fprintf(obj.com, cmd);
             retVal = str2num(fscanf(obj.com));
             fclose(obj.com);
-            retVal = -1;
         end
 
         function retVal = getChannels(obj)
@@ -272,9 +272,11 @@ classdef Osc < handle
         end
 
         function retVal = getPk2PkCH1(obj)
-        % Description: Takes the measured Pk2Pk 
-        % Input Args: ??
+        % Description: Measures the Pk2Pk Voltage off of CH1
+        % Input Args: none
+        % Return Value: retVal(float)
         % Example:
+        %    osc.getPk2PkCH1()
             fopen(obj.com);
             cmd = [':MEASUREMENT:IMMED:TYPE PK2PK;SOURCE CH1; '];
             cmd2 = ['MEASUREMENT:IMMED:VALUE? '];
@@ -288,15 +290,16 @@ classdef Osc < handle
                 obj.setScaleCH1(scale/4)
                 retVal = obj.getPk2PkCH1()
             end
-            if scale * 8 < retVal
-            
-            end
+            %if scale * 8 < retVal
+            %end
         end
 
         function retVal = getPk2PkCH2(obj)
-        % Description: Takes the measured Pk2Pk 
-        % Input Args: ??
+        % Description: Measures the Pk2Pk Voltage off of CH2
+        % Input Args: none
+        % Return Value: retVal(float)
         % Example:
+        %    osc.getPk2PkCH2()
             fopen(obj.com);
             cmd = [':MEASUREMENT:IMMED:TYPE PK2PK;SOURCE CH2; '];
             cmd2 = ['MEASUREMENT:IMMED:VALUE? '];
@@ -310,15 +313,16 @@ classdef Osc < handle
                 obj.setScaleCH2(scale/4);
                 retVal = obj.getPk2PkCH2();
             end
-            if scale * 8 < retVal
+            %if scale * 8 < retVal
             
-            end
+            %end
         end
         
         function setScaleCH1(obj, scale)
-        % Description: Takes the measured Pk2Pk 
-        % Input Args: ??
+        % Description: Sets the vertical scale of the oscilloscope for CH1
+        % Input Args: scale(float)
         % Example:
+        %    osc.setScaleCH1(0.27)
             fopen(obj.com);
             cmd = 'CH1:SCAle ';
             cmd = [cmd num2str(scale)];
@@ -327,9 +331,10 @@ classdef Osc < handle
         end
         
         function setScaleCH2(obj, scale)
-        % Description: Takes the measured Pk2Pk 
-        % Input Args: ??
+        % Description: Sets the vertical scale of the oscilloscope for CH2
+        % Input Args: scale(float)
         % Example:
+        %    osc.setScaleCH1(0.27)
             fopen(obj.com);
             cmd = 'CH2:SCAle ';
             cmd = [cmd num2str(scale)];
