@@ -17,11 +17,11 @@
 %   Lester Chee, Ryley Morgan, Jacky Jiang, Yao Li, Joshua Kong, Richard Xie, Jeremy Borys
 classdef Osc < handle
     properties
-        channels = -1;
+        %channels = -1;
         scaleCH1 = -1;
         scaleCH2 = -1;
         baudRate = -1;
-        data;
+        %data;
         
     end
 
@@ -46,7 +46,7 @@ classdef Osc < handle
 
             osc.checkConnected();
 
-            osc.channels = osc.getChannels();
+            %osc.channels = osc.getChannels();
             osc.scaleCH1 = osc.getScaleCH1();
             osc.scaleCH2 = osc.getScaleCH2();
             osc.baudRate = osc.com.BaudRate;
@@ -87,6 +87,7 @@ classdef Osc < handle
             end
             fclose(obj.com);
             obj.com.TimeOut = 10;
+        end
 
         function autoSet(obj)
         % Description: Ensures that the actual Oscilloscope is connected.
@@ -198,7 +199,7 @@ classdef Osc < handle
             fclose(obj.com);
         end
         
-        function retVal = getPhase(obj)
+        function retVal = getPlotCH2(obj)
         % Example:
             fopen(obj.com);
             fprintf(obj.com, 'Data:Source CH2');
@@ -220,6 +221,30 @@ classdef Osc < handle
             
             fclose(obj.com)
         end
+
+        function retVal = getPlotCH1(obj)
+        % Example:
+            fopen(obj.com);
+            fprintf(obj.com, 'Data:Source CH1');
+            fprintf(obj.com, 'Data:Encdg SRIbinary');
+            fprintf(obj.com, 'Data:Width 2');
+            fprintf(obj.com, 'Data:Start 1');
+            fprintf(obj.com, 'Data:Stop 2500');
+            fprintf(obj.com, 'Curve? ');
+            retVal = fread(obj.com, 2500, 'int16');
+            cleanup = fscanf(obj.com);
+            
+            fprintf(obj.com, 'wfmpre:ch2:xincr?')
+            horzmult = str2num(fscanf(obj.com));
+            
+            xch = horzmult.*linspace(1,2500,2500);
+            retVal = obj.scaleCH1.*retVal;
+            
+            plot(xch2,retVal)
+            
+            fclose(obj.com)
+        end
+
         
         function com = getCom(obj)
         % Description: Provides an interface for the user to access the com object
