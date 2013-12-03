@@ -132,12 +132,15 @@ classdef Osc < handle
         end
 
         function retVal = getChannels(obj)
-        % Description:
+        % Description: Test to see what channels are available
         % Example:
             fopen(obj.com);
-            cmd = ['CH<x>? '];
+            cmd = ['CH1? '];
+            cmd2 = ['CH2? '];
             fprintf(obj.com, cmd);
-            retVal = str2num(fscanf(obj.com));
+            retVal = fscanf(obj.com);
+            fprintf(obj.com, cmd2);
+            retVal = [retVal fscanf(obj.com);]
             fclose(obj.com);
         end
         
