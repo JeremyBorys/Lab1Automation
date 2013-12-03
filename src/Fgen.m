@@ -308,12 +308,9 @@ classdef Fgen < handle
             list = linspace(start, finish, numData)
             
             for i = list
-                VoltOffset = sprintf('%.2f',i) 
+                VoltOffset = str2num(sprintf('%.2f',i))
                 obj.setVoltOffset(VoltOffset)
-                
-            end   
-      
-            
+            end
         end
         
         function setSweepRate(obj, rate)
