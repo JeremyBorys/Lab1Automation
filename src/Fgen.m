@@ -79,9 +79,6 @@ classdef Fgen < handle
         % connected.        
         % Result: Tells the user that the BaudRate for the device is not
         % set correctly.
-        
-        % TODO(Jeremy Nov 22): We should set the timeout to be smaller
-            
             obj.com.timeout = 1;
             fopen(obj.com);
             fprintf(obj.com, '*IDN?');
@@ -103,13 +100,16 @@ classdef Fgen < handle
         % Description: Provides an interface for the user to access the com object
         % Example: 
         %   fgen = Fgen();
-        %   fgen.getCom
+        %   com = fgen.getCom()
             com = obj.com;
         end
         
         function retVal = getWaveForm(obj)
-        % Description: Check the waveform: Sinusoid, Triangle, Square
+        % Description: Gets the waveform output from thefunction Generator
+        %     the waveforms that the Instek GFG-3015 outputs are
+        %     Sinusoid(1), Triangle(2), Square(3)
         % Example:
+        %     fgen.getWaveForm()
             fopen(obj.com);
             cmd = ' :FUNC:WAV ?';
             fprintf(obj.com, cmd);
